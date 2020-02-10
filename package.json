@@ -12,6 +12,7 @@
     "start": "node build/app.js"
   },
   "dependencies": {
+    "discord.js": "^11.5.1"
   },
   "devDependencies": {
     "@types/node": "^13.7.0",
