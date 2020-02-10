@@ -1,6 +1,6 @@
-import { CommandController, ActionFn } from "./command-controller.model";
+import { CommandController } from "./command-controller.model";
 
 export interface CommandRoute {
     command: string;
-    action: ActionFn | CommandController;
+    action: ((remainingTokens: Array<string>) => any) | CommandController;
 };

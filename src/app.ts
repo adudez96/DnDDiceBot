@@ -1,14 +1,8 @@
 import * as Discord from 'discord.js';
 import { commands } from './commands';
-import { CommandController, ActionFn } from './@models/command-controller.model';
+import { isCommandController } from './@models/command-controller.model';
 
-const isCommandController = (obj: any): obj is CommandController => {
-    return obj !== undefined
-    && obj !== null
-    && (obj as CommandController).type === 'CommandController';
-};
-
-const commandRoutes:{[cmd:string]:ActionFn} = {};
+const commandRoutes:{[cmd:string]: any} = {};
 
 commands.forEach(cmd => {
     if (!commandRoutes[cmd.command]) {
