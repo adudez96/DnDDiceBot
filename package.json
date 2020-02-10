@@ -1,0 +1,20 @@
+{
+  "name": "dndicebot",
+  "version": "0.1.0",
+  "description": "Dice order bot for Discord",
+  "main": "build/app.js",
+  "repository": "https://github.com/adudez96/DnDiceBot.git",
+  "author": "<adudez96@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "build": "./node_modules/.bin/tsc",
+    "build:watch": "./node_modules/.bin/tsc --watch",
+    "start": "node build/app.js"
+  },
+  "dependencies": {
+  },
+  "devDependencies": {
+    "@types/node": "^13.7.0",
+    "typescript": "^3.7.5"
+  }
+}
