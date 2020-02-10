@@ -1,5 +1,9 @@
 # DnDiceBot
-***Dice bot order for Dungeons and Dragons parties on Discord***
+***Bot for Dungeons and Dragons parties on Discord***
+
+## Features
+* Ping (`!ping`)
+* Dice roll (`!roll`)
 
 ## Requirements
 * [Node.js](https://nodejs.org/en/) v12.15.0 (recommend using [NVM](https://github.com/nvm-sh/nvm) to manage Node.js versions)
