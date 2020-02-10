@@ -7,8 +7,13 @@ client.on('ready', () => {
 });
 
 client.on('message', msg => {
-    console.log(msg);
-    if (msg.content === 'ping') msg.reply('pong');
+    switch (msg.content) {
+        case '!ping':
+            msg.reply('dong');
+            break;
+        default:
+            break;
+    }
 });
 
 client.login(process.env.DISCORD_TOKEN);
