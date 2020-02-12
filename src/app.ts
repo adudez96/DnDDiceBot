@@ -5,12 +5,9 @@ import { isCommandController } from './@models/command-controller.model';
 const commandRoutes:{[cmd:string]: any} = {};
 
 commands.forEach(cmd => {
+    console.log(cmd);
     if (!commandRoutes[cmd.command]) {
-        if (isCommandController(cmd.action)) {
-            commandRoutes[cmd.command] = cmd.action.action
-        } else {
-            commandRoutes[cmd.command] = cmd.action;
-        }
+        commandRoutes[cmd.command] = cmd.action;
     }
 });
 
@@ -23,17 +20,21 @@ client.on('ready', () => {
 });
 
 client.on('message', msg => {
-    console.log(msg.content);
+    console.log(`raw message: "${msg.content}"`);
     switch (msg.content) {
         case '!ping':
             msg.reply('dong');
             break;
         default:
             let tokens = msg.content.split(' ');
+            console.log(tokens);
             let action = commandRoutes[tokens.shift()];
             if (action) {
-                let response = action(tokens);
-                if (response) msg.reply(response);
+                if (isCommandController(action)) {
+                    action.action(tokens, msg);
+                } else {
+                    action(tokens, msg);
+                }
             };
             break;
     }

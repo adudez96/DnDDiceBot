@@ -1,6 +1,7 @@
 import { CommandRoute } from "./@models/command-route.model";
 import { diceRoll } from "./utils/dice-roll.util";
 import { HelpController } from "./controllers/help.controller";
+import { KrakenScrapeController } from "./controllers/kraken-scrape.controller";
 
 export const commands: ReadonlyArray<CommandRoute> = [
     {
@@ -9,13 +10,17 @@ export const commands: ReadonlyArray<CommandRoute> = [
     },
     {
         command: '!roll',
-        action: (remainingTokens) => {
+        action: (remainingTokens, msg) => {
             let res = 'your roll:\n';
             remainingTokens.forEach(str => {
                 let rollRes = diceRoll(str);
                 res += `${str}: ${rollRes}\n`;
             });
-            return res;
-        }
+            msg.reply(res);
+        },
+    },
+    {
+        command: '!shop',
+        action: new KrakenScrapeController(),
     }
 ];

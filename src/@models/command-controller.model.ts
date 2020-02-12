@@ -1,6 +1,7 @@
+import { Message } from "discord.js";
 
 export abstract class CommandController {
-    abstract action(remainingTokens: Array<string>): any;
+    abstract action(remainingTokens: Array<string>, msg: Message): any;
 }
 
 export function isCommandController(obj: any): obj is CommandController {
