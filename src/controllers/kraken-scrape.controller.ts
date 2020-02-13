@@ -8,10 +8,12 @@ interface ItemDetails {
 }
 
 export class KrakenScrapeController extends CommandController {
+    private browser: puppeteer.Browser;
+
     action(remainingTokens: string[], msg: Message) {
+        msg.reply('Processing shop item...');
         this.crawl(remainingTokens[0])
             .then((result) => {
-                msg.reply('Processing shop item...');
                 msg.reply(JSON.stringify(result));
             })
             .catch((err) => {
@@ -21,8 +23,10 @@ export class KrakenScrapeController extends CommandController {
     }
 
     async crawl(url: string): Promise<ItemDetails> {
-        const browser = await puppeteer.launch();
-        const page = await browser.newPage();
+        if (!this.browser) {
+            this.browser = await puppeteer.launch();
+        }
+        const page = await this.browser.newPage();
 
         await page.goto(url);
 
@@ -36,8 +40,10 @@ export class KrakenScrapeController extends CommandController {
         });
         console.log(pageData);
 
-        browser.close();
-
         return pageData;
+    }
+
+    async onDestroy(): Promise<void> {
+        if (this.browser) await this.browser.close();
     }
 }

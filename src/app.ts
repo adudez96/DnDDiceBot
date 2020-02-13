@@ -41,3 +41,14 @@ client.on('message', msg => {
 });
 
 client.login(process.env.DISCORD_TOKEN);
+
+process.on('SIGINT', () => {
+    console.log('Cleaning up and exiting...');
+    Object.keys(commandRoutes).forEach(key => {
+        let actionHandler = commandRoutes[key];
+        if (isCommandController(actionHandler)) {
+            actionHandler.onDestroy();
+        }
+    });
+    process.exit();
+})
