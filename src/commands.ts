@@ -4,6 +4,7 @@ import { HelpController } from "./controllers/help.controller";
 import { KrakenScrapeController } from "./controllers/add-item.controller";
 import { NewOrderController } from "./controllers/new-order.controller";
 import { ShowOrderController } from "./controllers/show-order.controller";
+import { DiceRollController } from "./controllers/dice-roll.controller";
 
 export const commands: ReadonlyArray<CommandRoute> = [
     {
@@ -12,14 +13,7 @@ export const commands: ReadonlyArray<CommandRoute> = [
     },
     {
         command: '!roll',
-        action: (remainingTokens, msg) => {
-            let res = 'your roll:\n';
-            remainingTokens.forEach(str => {
-                let rollRes = diceRoll(str);
-                res += `${str}: ${rollRes}\n`;
-            });
-            msg.reply(res);
-        },
+        action: new DiceRollController(),
     },
     {
         command: '!shop',
