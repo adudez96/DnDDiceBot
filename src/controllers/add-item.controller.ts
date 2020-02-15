@@ -15,7 +15,11 @@ export class KrakenScrapeController extends CommandController {
         msg.reply('Processing shop item...');
         this.crawl(remainingTokens[0], msg.author.id, msg.channel.id)
             .then((result) => {
-                msg.reply(JSON.stringify(result));
+                if (result) {
+                    msg.reply(JSON.stringify(result));
+                } else {
+                    msg.reply('Start a new order first with `!neworder`.');
+                }
             })
             .catch((err) => {
                 console.log(err);
@@ -45,6 +49,10 @@ export class KrakenScrapeController extends CommandController {
             active: true,
             channelId,
         });
+
+        if (order === null) {
+            return null;
+        }
 
         console.log(order);
 

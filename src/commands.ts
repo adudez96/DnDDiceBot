@@ -1,7 +1,7 @@
 import { CommandRoute } from "./@models/command-route.model";
 import { diceRoll } from "./utils/dice-roll.util";
 import { HelpController } from "./controllers/help.controller";
-import { KrakenScrapeController } from "./controllers/kraken-scrape.controller";
+import { KrakenScrapeController } from "./controllers/add-item.controller";
 import { NewOrderController } from "./controllers/new-order.controller";
 import { ShowOrderController } from "./controllers/show-order.controller";
 
