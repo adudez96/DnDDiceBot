@@ -1,17 +1,17 @@
 import * as Discord from 'discord.js';
 import { commands } from './commands';
 import { isCommandController } from './@models/command-controller.model';
+import { initDb } from './db/mongo';
 
 const commandRoutes:{[cmd:string]: any} = {};
 
+console.log('Setting up controllers...');
 commands.forEach(cmd => {
     console.log(cmd);
     if (!commandRoutes[cmd.command]) {
         commandRoutes[cmd.command] = cmd.action;
     }
 });
-
-console.log(commandRoutes);
 
 const client = new Discord.Client();
 
@@ -20,14 +20,13 @@ client.on('ready', () => {
 });
 
 client.on('message', msg => {
-    console.log(`raw message: "${msg.content}"`);
+    console.log(`received message: "${msg.content}"`);
     switch (msg.content) {
         case '!ping':
             msg.reply('dong');
             break;
         default:
             let tokens = msg.content.split(' ');
-            console.log(tokens);
             let action = commandRoutes[tokens.shift()];
             if (action) {
                 if (isCommandController(action)) {
@@ -40,7 +39,9 @@ client.on('message', msg => {
     }
 });
 
-client.login(process.env.DISCORD_TOKEN);
+initDb().then(() => {
+    client.login(process.env.DISCORD_TOKEN);
+});
 
 process.on('SIGINT', () => {
     console.log('Cleaning up and exiting...');
@@ -51,4 +52,4 @@ process.on('SIGINT', () => {
         }
     });
     process.exit();
-})
+});
